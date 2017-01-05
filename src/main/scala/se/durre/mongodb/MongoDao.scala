@@ -1,6 +1,7 @@
 package se.durre.mongodb
 
 import reactivemongo.api.collections.bson.BSONCollection
+import reactivemongo.api.commands.WriteResult
 import reactivemongo.api.{Cursor, DefaultDB}
 import reactivemongo.bson._
 
@@ -27,12 +28,14 @@ abstract class MongoDao[T, ID](db: DefaultDB, val collectionName: String)(implic
       BSONDocument("_id" -> id),
       obj
     ).map(_ => obj)
+    .recover(improvedStacktrace(s"updateById($id, $obj)"))
 
   def findAll(query: BSONDocument = BSONDocument(), sort: BSONDocument = BSONDocument("_id" -> 1)): Future[List[T]] = collection
     .find(query)
     .sort(sort)
     .cursor[T]()
     .collect[List]()
+    .recover(improvedStacktrace(s"findAll($query, $sort)"))
 
   def findOne(query: BSONDocument): Future[Option[T]] = collection
     .find(query)
@@ -41,5 +44,9 @@ abstract class MongoDao[T, ID](db: DefaultDB, val collectionName: String)(implic
 
   def findById(id: ID): Future[Option[T]] =
     findOne(BSONDocument("_id" -> id))
+
+  def removeById(id: ID): Future[WriteResult] = collection
+    .remove(BSONDocument("_id" -> id))
+    .recover(improvedStacktrace(s"removeById($id)"))
 
 }

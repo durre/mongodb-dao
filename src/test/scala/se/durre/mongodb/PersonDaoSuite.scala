@@ -46,4 +46,12 @@ class PersonDaoSuite extends MongoDbTest {
     val found = dao.findAll(sort = BSONDocument("born" -> -1)).futureValue
     found shouldBe List(anotherPerson, person)
   }
+
+  test("remove by id") {
+    dao.insert(person).futureValue
+    dao.findById(person.id).futureValue shouldBe Some(person)
+
+    dao.removeById(person.id).futureValue
+    dao.findById(person.id).futureValue shouldBe None
+  }
 }
