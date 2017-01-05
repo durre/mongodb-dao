@@ -1,7 +1,7 @@
 package se.durre.mongodb
 
 import reactivemongo.api.collections.bson.BSONCollection
-import reactivemongo.api.DefaultDB
+import reactivemongo.api.{Cursor, DefaultDB}
 import reactivemongo.bson._
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -22,6 +22,17 @@ abstract class MongoDao[T, ID](db: DefaultDB, val collectionName: String)(implic
     .map(_ => obj)
     .recover(improvedStacktrace(s"insert($obj)"))
 
+  def updateById(id: ID, obj: T): Future[T] = collection
+    .update(
+      BSONDocument("_id" -> id),
+      obj
+    ).map(_ => obj)
+
+  def findAll(query: BSONDocument = BSONDocument(), sort: BSONDocument = BSONDocument("_id" -> 1)): Future[List[T]] = collection
+    .find(query)
+    .sort(sort)
+    .cursor[T]()
+    .collect[List]()
 
   def findOne(query: BSONDocument): Future[Option[T]] = collection
     .find(query)
