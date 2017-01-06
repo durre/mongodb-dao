@@ -3,14 +3,14 @@ package se.durre.mongodb
 import com.typesafe.config.Config
 import reactivemongo.api._
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 
 object MongoContext {
 
   private lazy val driver = new MongoDriver
 
-  def connect(config: Config)(implicit ec: ExecutionContext): DefaultDB = {
+  def connect(config: Config)(implicit ec: ExecutionContext): Future[DefaultDB] = {
 
     val uri = config.getString("uri")
 
@@ -19,7 +19,7 @@ object MongoContext {
     ) { parsedUri =>
       val failoverStrategy = FailoverStrategy(retries = 10, initialDelay = 1.second)
       val connection = driver.connection(parsedUri)
-      connection(parsedUri.db.get, failoverStrategy)
+      connection.database(parsedUri.db.get, failoverStrategy)
     }
   }
 }
