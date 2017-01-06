@@ -4,7 +4,8 @@ import java.time.LocalDate
 import java.util.UUID
 
 import reactivemongo.api.DefaultDB
-import reactivemongo.bson.{BSONDocumentWriter, BSONDocument, BSONDocumentReader}
+import reactivemongo.api.indexes.{Index, IndexType}
+import reactivemongo.bson.{BSONDocument, BSONDocumentReader, BSONDocumentWriter}
 import se.durre.mongodb.formats.CommonDbFormats._
 import se.durre.mongodb.formats.CommonDbFormats
 
@@ -37,4 +38,8 @@ class PersonDao(db: DefaultDB) extends MongoDao[Person, UUID](db, collectionName
       "graduated" -> CommonDbFormats.LocalDateAsDateHandler.write(t.graduated)
     )
   }
+
+  override def requiredIndexes: Seq[Index] = Seq(
+    Index(key = Seq(("name", IndexType.Ascending), ("born", IndexType.Ascending)), unique = true)
+  )
 }

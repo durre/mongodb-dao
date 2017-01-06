@@ -3,6 +3,8 @@ package se.durre.mongodb
 import java.time.LocalDate
 import java.util.UUID
 
+import org.scalatest.OneInstancePerTest
+import org.scalatest.exceptions.TestFailedException
 import reactivemongo.bson.BSONDocument
 
 class PersonDaoSuite extends MongoDbTest {
@@ -53,5 +55,12 @@ class PersonDaoSuite extends MongoDbTest {
 
     dao.removeById(person.id).futureValue
     dao.findById(person.id).futureValue shouldBe None
+  }
+
+  test("ensure indexes") {
+    dao.insert(person).futureValue
+    intercept[RuntimeException] {
+      dao.insert(person.copy(id = UUID.randomUUID())).futureValue
+    }
   }
 }

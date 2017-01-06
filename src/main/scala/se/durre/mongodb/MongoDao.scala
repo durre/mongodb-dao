@@ -2,6 +2,7 @@ package se.durre.mongodb
 
 import reactivemongo.api.collections.bson.BSONCollection
 import reactivemongo.api.commands.WriteResult
+import reactivemongo.api.indexes.Index
 import reactivemongo.api.{Cursor, DefaultDB}
 import reactivemongo.bson._
 
@@ -13,10 +14,14 @@ abstract class MongoDao[T, ID](db: DefaultDB, val collectionName: String)(implic
   protected lazy val collection: BSONCollection = db.collection(collectionName)
   protected implicit def reader: BSONDocumentReader[T]
   protected implicit def writer: BSONDocumentWriter[T]
+  protected def requiredIndexes: Seq[Index] = Seq.empty
 
   protected def improvedStacktrace[A](method: => String): PartialFunction[Throwable, A] = {
     case e: Throwable => throw new RuntimeException(s"Exception in DAO $getClass.$method. ${e.getMessage}", e)
   }
+
+  // Make sure we have the correct indexes
+  Future.sequence(requiredIndexes.map(collection.indexesManager.ensure))
 
   def insert(obj: T): Future[T] = collection
     .insert(obj)
@@ -48,5 +53,8 @@ abstract class MongoDao[T, ID](db: DefaultDB, val collectionName: String)(implic
   def removeById(id: ID): Future[WriteResult] = collection
     .remove(BSONDocument("_id" -> id))
     .recover(improvedStacktrace(s"removeById($id)"))
+
+  def listIndexes: Future[List[Index]] =
+    collection.indexesManager.list()
 
 }
