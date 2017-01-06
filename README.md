@@ -49,9 +49,9 @@ mongodb {
 
 ```scala
 val config = ConfigFactory.load() 
-val db = MongoContext.connect(config.getConfig("mongodb"))
-
-val dao = new PersonDao(db)
+MongoContext.connect(config.getConfig("mongodb")).map { db =>
+  val dao = new PersonDao(db)
+}
 ```
 
 
