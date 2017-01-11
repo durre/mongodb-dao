@@ -1,10 +1,9 @@
 name := """mongodb-dao"""
-organization := "se.durre"
+organization := "com.github.durre"
 version := "1.2.0"
 
 scalaVersion := "2.11.8"
 
-// Change this to another test framework if you prefer
 libraryDependencies ++= Seq(
   "org.reactivemongo" %% "reactivemongo" % "0.12.0",
   "org.scalatest" %% "scalatest" % "2.2.4" % "test",
