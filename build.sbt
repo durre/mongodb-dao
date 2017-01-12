@@ -12,6 +12,8 @@ libraryDependencies ++= Seq(
 
 resolvers += "Typesafe releases" at "http://repo.typesafe.com/typesafe/releases/"
 
+publishMavenStyle := true
+
 publishArtifact in (Test, packageBin) := true
 publishArtifact in (Test, packageDoc) := true
 publishArtifact in (Test, packageSrc) := true

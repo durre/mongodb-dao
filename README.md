@@ -4,6 +4,13 @@ Contains some common functionality when working with MongoDb together with [Reac
 
 ## Usage
 
+```
+libraryDependencies ++= Seq(
+  "com.github.durre" %% "mongodb-dao" % "1.2.0",
+  // This is a bit akward due to a bug in sbt I believe
+  ("com.github.durre" %% "mongodb-dao" % "1.2.0" % "test").classifier("tests")
+)
+```
 
 ### The dao
 ```scala
