@@ -1,4 +1,4 @@
-package se.durre.mongodb
+package com.github.durre.mongodb
 
 import com.typesafe.config.Config
 import reactivemongo.api._

@@ -1,4 +1,4 @@
-package se.durre.mongodb.formats
+package com.github.durre.mongodb.formats
 
 import java.io.{DataOutputStream, ByteArrayOutputStream}
 import java.nio.ByteBuffer

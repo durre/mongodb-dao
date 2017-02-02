@@ -1,6 +1,6 @@
-package se.durre.mongodb.formats
+package com.github.durre.mongodb.formats
 
-import java.time.{Instant, ZoneId, ZonedDateTime, LocalDateTime}
+import java.time.{Instant, LocalDateTime, ZoneId, ZonedDateTime}
 
 import org.scalatest._
 import reactivemongo.bson.BSONDateTime

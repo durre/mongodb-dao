@@ -1,13 +1,13 @@
-package se.durre.mongodb
+package com.github.durre.mongodb
 
 import java.time.LocalDate
 import java.util.UUID
 
+import com.github.durre.mongodb.formats.CommonDbFormats
+import com.github.durre.mongodb.formats.CommonDbFormats._
 import reactivemongo.api.DefaultDB
 import reactivemongo.api.indexes.{Index, IndexType}
 import reactivemongo.bson.{BSONDocument, BSONDocumentReader, BSONDocumentWriter}
-import se.durre.mongodb.formats.CommonDbFormats._
-import se.durre.mongodb.formats.CommonDbFormats
 
 
 case class Person(

@@ -1,4 +1,4 @@
-package se.durre.mongodb
+package com.github.durre.mongodb
 
 import reactivemongo.api.collections.bson.BSONCollection
 import reactivemongo.api.commands.WriteResult

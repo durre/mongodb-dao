@@ -1,10 +1,8 @@
-package se.durre.mongodb
+package com.github.durre.mongodb
 
 import java.time.LocalDate
 import java.util.UUID
 
-import org.scalatest.OneInstancePerTest
-import org.scalatest.exceptions.TestFailedException
 import reactivemongo.bson.BSONDocument
 
 class PersonDaoSuite extends MongoDbTest {
