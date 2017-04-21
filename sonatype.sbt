@@ -1,4 +1,4 @@
-sonatypeProfileName := "durre"
+sonatypeProfileName := "com.github.durre"
 
 pomExtra in Global := {
   <url>https://github.com/durre/mongodb-dao</url>
