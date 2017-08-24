@@ -6,9 +6,9 @@ Contains some common functionality when working with MongoDb together with [Reac
 
 ```
 libraryDependencies ++= Seq(
-  "com.github.durre" %% "mongodb-dao" % "1.2.0",
+  "com.github.durre" %% "mongodb-dao" % "1.2.2",
   // This is a bit akward due to a bug in sbt I believe
-  ("com.github.durre" %% "mongodb-dao" % "1.2.0" % "test").classifier("tests")
+  ("com.github.durre" %% "mongodb-dao" % "1.2.2" % "test").classifier("tests")
 )
 ```
 

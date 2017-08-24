@@ -1,11 +1,11 @@
 name := """mongodb-dao"""
 organization := "com.github.durre"
-version := "1.2.1"
+version := "1.2.2"
 
 scalaVersion := "2.11.8"
 
 libraryDependencies ++= Seq(
-  "org.reactivemongo" %% "reactivemongo" % "0.12.1",
+  "org.reactivemongo" %% "reactivemongo" % "0.12.6",
   "org.scalatest" %% "scalatest" % "3.0.1" % "test",
   "ch.qos.logback" %  "logback-classic" % "1.1.7" % "provided"
 )
