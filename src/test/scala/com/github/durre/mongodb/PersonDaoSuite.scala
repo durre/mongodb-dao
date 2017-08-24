@@ -33,7 +33,7 @@ class PersonDaoSuite extends MongoDbTest {
       graduated = LocalDate.of(2000, 12, 19)
     )
 
-    dao.updateById(person.id, improvedPerson)
+    dao.updateById(person.id, improvedPerson).futureValue
     val found = dao.findById(person.id).futureValue
     found shouldBe Some(improvedPerson)
   }
